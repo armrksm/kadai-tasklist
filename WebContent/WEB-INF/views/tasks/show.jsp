@@ -7,7 +7,7 @@
             <c:when test="${task != null}">
                 <h2>id : ${task.id} のタスク詳細のページ</h2>
 
-<table>
+				<table>
                     <tbody>
                         <tr>
                             <th>タイトル</th>

@@ -42,7 +42,6 @@ public class CreateServlet extends HttpServlet {
             t.setCreated_at(currentTime);
             t.setUpdated_at(currentTime);
 
-         // バリデーションを実行してエラーがあったら新規登録のフォームに戻る
             List<String> errors = TaskValidator.validate(t);
             if(errors.size() > 0) {
                 em.close();
@@ -56,7 +55,6 @@ public class CreateServlet extends HttpServlet {
                 rd.forward(request, response);
             } else {
 
-            //データベースに保存
             em.getTransaction().begin();
             em.persist(t);
             em.getTransaction().commit();

@@ -40,14 +40,12 @@ public class UpdateServlet extends HttpServlet {
             t.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            t.setUpdated_at(currentTime);       // 更新日時のみ上書き
+            t.setUpdated_at(currentTime);
 
-         // バリデーションを実行してエラーがあったら編集画面のフォームに戻る
             List<String> errors = TaskValidator.validate(t);
             if(errors.size() > 0) {
                 em.close();
 
-                // フォームに初期値を設定、さらにエラーメッセージを送る
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("task", t);
                 request.setAttribute("errors", errors);
@@ -57,16 +55,13 @@ public class UpdateServlet extends HttpServlet {
             } else {
 
             }
-            // データベースを更新
             em.getTransaction().begin();
             em.getTransaction().commit();
             request.getSession().setAttribute("flush", "更新が完了しました。");
             em.close();
 
-            // セッションスコープ上の不要になったデータを削除
             request.getSession().removeAttribute("task_id");
 
-            // indexページへリダイレクト
             response.sendRedirect(request.getContextPath() + "/index");
         }
     }
